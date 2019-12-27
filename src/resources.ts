@@ -1,16 +1,42 @@
 import {createReadStream, ReadStream, appendFile} from "fs";
 import {createInterface } from 'readline';
 
-export function readResources(callback: (line: string) => void): void {
-  const path: string = __dirname+'/resources/resources.txt';
+/**
+ * Resources
+ * @class
+ */
+export class Resources {
+  private readonly stream: ReadStream;
 
-  const stream: ReadStream = createReadStream(path, 'utf-8');
+  /**
+   * @constructor
+   */
+  public constructor() {
+    const path: string = __dirname+'/resources/resources.txt';
+    this.stream = createReadStream(path, 'utf-8');
+  }
 
-  createInterface({input: stream}).on('line', (line) => {
-    callback(line);
-  });
+  /**
+   * read
+   * @param callback
+   */
+  public read(callback: (line: string) => void): void {
+    createInterface({input: this.stream}).on('line', (line) => {
+      callback(line);
+    });
+  }
+
+  /**
+   * close
+   */
+  public close(callback: () => void) {
+    createInterface({input: this.stream}).on('close', () => {
+      callback();
+    })
+  }
 }
 
+// TODO: Reportclass に書き出す
 export function writeReport(data: string) {
   console.log(data);
   appendFile(__dirname+'/report/result.txt', data, (err)=> {
