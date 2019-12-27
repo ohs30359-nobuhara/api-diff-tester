@@ -1,5 +1,6 @@
-import {createReadStream, ReadStream, appendFile} from "fs";
+import {createReadStream, ReadStream} from "fs";
 import {createInterface } from 'readline';
+import * as rootPath from 'app-root-path';
 
 /**
  * Resources
@@ -12,7 +13,7 @@ export class Resources {
    * @constructor
    */
   public constructor() {
-    const path: string = __dirname+'/resources/resources.txt';
+    const path: string = `${rootPath.path}/config/resources/resources.txt`;
     this.stream = createReadStream(path, 'utf-8');
   }
 
@@ -34,12 +35,4 @@ export class Resources {
       callback();
     })
   }
-}
-
-// TODO: Reportclass に書き出す
-export function writeReport(data: string) {
-  console.log(data);
-  appendFile(__dirname+'/report/result.txt', data, (err)=> {
-    console.log(err);
-  });
 }

@@ -2,4 +2,4 @@ url:
   expected: "expected url"
   actual: "actual url"
 
-delaySec: 1
+delayMs: 1000

@@ -1,5 +1,7 @@
 import {createPatch} from "diff";
 import {Entity} from "./entity";
+import {appendFile} from "fs";
+import * as rootPath from "app-root-path";
 
 /**
  * Report
@@ -22,9 +24,21 @@ export class Report {
   /**
    * print
    */
-  public print(): string {
+  public print(fileName: any): void {
+    const patch: string = this.getPatchStream();
+
+    appendFile(`${rootPath.path}/report/${fileName}.txt`, patch, (err)=> {
+      console.log(err);
+    });
+    console.log(patch);
+  }
+
+  /**
+   * getPatchStream
+   */
+  private getPatchStream(): string {
     return createPatch(
-      ``,
+      `actual status: ${this.actual.status}, expect status: ${this.expect.status}`,
       this.actual.data, this.expect.data,
       `actual:${this.actual.requestUrl}`, `expect:${this.expect.requestUrl}`);
   }

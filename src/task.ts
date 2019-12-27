@@ -1,7 +1,6 @@
 import {get} from "config";
 import {fetch} from "./fetcher";
 import {Entity} from "./model/entity";
-import {writeReport} from "./resources";
 import {Report} from "./model/report";
 
 /**
@@ -27,7 +26,7 @@ export class Task {
   /**
    * test
    */
-  public test() {
+  public test(testTime: number) {
     Promise.all([
       fetch(this.actualUrl),
       fetch(this.expectedUrl)
@@ -35,7 +34,7 @@ export class Task {
       const actualEntity: Entity = new Entity(result[0]);
       const expectEntity: Entity = new Entity(result[1]);
 
-      writeReport(new Report(actualEntity, expectEntity).print());
+      new Report(actualEntity, expectEntity).print(testTime);
     }));
   }
 }

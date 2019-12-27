@@ -10,6 +10,7 @@ const prettyData = require('pretty-data');
 export class Entity {
   public readonly data: string;
   public readonly requestUrl: string;
+  public readonly status: number;
 
   /**
    * @constructor
@@ -17,6 +18,7 @@ export class Entity {
    */
   public constructor(data: Response) {
     this.requestUrl = data.url;
+    this.status = data.status;
 
     if (data.contentType.type === ContentTypeEnum.JSON) {
       this.data = this.toJson(JSON.stringify(data.response));

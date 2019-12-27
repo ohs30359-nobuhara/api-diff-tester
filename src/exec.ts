@@ -1,7 +1,9 @@
 import {Resources} from "./resources";
 import Timeout = NodeJS.Timeout;
 import {Task} from "./task";
+import {get} from "config";
 
+const startTime: number = Date.now();
 const urls: string[] = [];
 const resources: Resources = new Resources();
 
@@ -18,9 +20,9 @@ resources.close(() => {
     if (testUrl == null) {
       clearInterval(to);
     } else {
-      new Task(testUrl).test();
+      new Task(testUrl).test(startTime);
       counter++;
     }
-  }, 2000);
+  }, get("delayMs"));
 });
 
