@@ -14,10 +14,10 @@ url:
 delaySec: 1
 ```
 
-2. Set the parameter to be verified to `src/resources.yml`
+2. Set the parameter to be verified to `config/resources/resources.txt`
 
 
-3. After executing the command, a report is dist in `src/result.yml`
+3. After executing the command, a report is dist in `report/${timestamp}.txt`
 
 ```
 $ npm run start
