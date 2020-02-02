@@ -27,9 +27,13 @@ export class Report {
    */
   public async print(fileName: any): Promise<void> {
     const patch: string = await this.getPatchStream();
+    const isEqual: boolean = (this.actual.data === this.expect.data);
 
-    appendFile(`${rootPath.path}/report/${fileName}.txt`, patch, (err)=> {
-      console.log(err);
+    // 差分の有無でファイルを出し分ける
+    const prefix: string = isEqual? 'safe_' : 'diff_';
+
+    appendFile(`${rootPath.path}/report/${fileName}${prefix}.txt`, patch, (e)=> {
+      console.log('writeError', e);
     });
     console.log(patch);
   }
@@ -49,6 +53,10 @@ export class Report {
       `actual:${this.actual.requestUrl}`, `expect:${this.expect.requestUrl}`);
   }
 
+  /**
+   * sort
+   * @param stream
+   */
   private async sort(stream: string): Promise<string> {
     return new Promise((resolve, reject) => {
       const proc: any = exec('sort', (e, stdout, stderr) => {
