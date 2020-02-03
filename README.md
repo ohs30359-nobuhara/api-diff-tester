@@ -12,6 +12,9 @@ url:
   
 # Adjust the interval for throwing requests
 delaySec: 1
+
+# Sort the stream to compare results
+sort: true 
 ```
 
 2. Set the parameter to be verified to `config/resources/resources.txt`
